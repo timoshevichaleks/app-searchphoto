@@ -2,5 +2,6 @@ export interface PhotoResponse {
   id: string
   secret: string,
   server: string,
-  title: string
+  title: string,
+  key?: string
 }

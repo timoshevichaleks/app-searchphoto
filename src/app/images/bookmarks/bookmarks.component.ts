@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ImagesService } from "../images.service";
-import { Photo } from "../models/photo";
 import { first, switchMap } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { PhotoResponse } from "../models/photo-response";
 
 @Component({
   selector: 'app-bookmarks',
@@ -11,35 +11,35 @@ import { Observable } from "rxjs";
 })
 export class BookmarksComponent implements OnInit {
 
-  photos: Photo[];
+  photos: PhotoResponse[];
 
   constructor(private imagesService: ImagesService) {
   }
 
   ngOnInit(): void {
-    this.imagesService.getSaveImages()
+   this.imagesService.getSaveImages()
       .pipe(first())
       .subscribe(
-        (res: { [key: string]: Photo }) => {
-          this.setPhotos(res);
+        (res: {[key: string]: PhotoResponse}) => {
+          this.setPhotos(res)
         }
       )
   }
 
-  private setPhotos(result: { [key: string]: Photo }): void {
+  private setPhotos(result: {[key: string]: PhotoResponse}): void {
     this.photos = result ? Object.keys(result).map(key => {return {key, ...result[key]}}) : [];
   }
 
-  deletePhoto(photo: Photo): void {
+  deletePhoto(photo: PhotoResponse): void {
     this.imagesService.delete(photo)
       .pipe(
-        switchMap((): Observable<{ [key: string]: Photo }> => {
+        switchMap((): Observable<{ [key: string]: PhotoResponse }> => {
           return this.imagesService.getSaveImages()
         }),
         first()
       )
       .subscribe(
-        (res: { [key: string]: Photo }) => {
+        (res: { [key: string]: PhotoResponse }) => {
           this.setPhotos(res)
         }
       )
