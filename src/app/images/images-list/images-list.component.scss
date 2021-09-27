@@ -1,0 +1,30 @@
+.photos {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(min(200px, 100%), 1fr));
+  gap: 20px;
+}
+
+.photo {
+  text-align: center;
+
+  &__image {
+    object-fit: cover;
+    height: 250px;
+  }
+
+  &__title {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-paginator {
+  background-color: #fafafa;
+}
+
