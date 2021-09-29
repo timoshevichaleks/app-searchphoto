@@ -6,10 +6,13 @@ import { AppComponent } from './app.component';
 import { ImagesModule } from "./images/images.module";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "./material/material.module";
+import { FormRegistrationComponent } from './form/form-registration/form-registration.component';
+import { FormModule } from "./form/form.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FormRegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -17,6 +20,7 @@ import { MaterialModule } from "./material/material.module";
     ImagesModule,
     HttpClientModule,
     MaterialModule,
+    FormModule
   ],
   providers: [],
   bootstrap: [AppComponent]
