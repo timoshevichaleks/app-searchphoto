@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { User } from "../User";
-import { FORM_ERRORS, FORM_SUCCESS, FORM_VALIDATION_MESSAGES } from "../form-data";
+import { User } from "../models/User";
+import { FORM_ERRORS, FORM_SUCCESS, FORM_VALIDATION_MESSAGES } from "../models/form-data";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'app-form-registration',
@@ -10,17 +11,18 @@ import { FORM_ERRORS, FORM_SUCCESS, FORM_VALIDATION_MESSAGES } from "../form-dat
 })
 export class FormRegistrationComponent implements OnInit {
 
-  formSuccess: any = FORM_SUCCESS;
-  formErrors: any = FORM_ERRORS;
-  validationMessages: any = FORM_VALIDATION_MESSAGES;
+  formSuccess: {[key: string]: string} = FORM_SUCCESS;
+  formErrors: {[key: string]: string} = FORM_ERRORS;
+  validationMessages: {[key: string]: {[key: string]: string}} = FORM_VALIDATION_MESSAGES;
 
+  firstName: AbstractControl;
+  lastName: AbstractControl;
   email: AbstractControl;
-  name: AbstractControl;
   password: AbstractControl;
   hide: boolean = true;
 
   userForm: FormGroup;
-  private user: User = new User('', '', '');
+  private user: User = new User('', '', '', '');
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -31,19 +33,21 @@ export class FormRegistrationComponent implements OnInit {
 
   private buildForm() {
     this.userForm = this.formBuilder.group({
-      name: [this.user.name, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+      firstName: [this.user.firstName, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+      lastName: [this.user.lastName, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
       email: [this.user.email,
         [Validators.required, Validators.pattern(/^([a-zA-Z0-9_.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,6})$/)]],
-      password: [this.user.password, Validators.required, Validators.minLength(4), Validators.maxLength(15)]
+      password: [this.user.password, [Validators.required, Validators.minLength(7), Validators.maxLength(15)]]
     })
 
     this.createControls();
 
-    this.userForm.valueChanges.subscribe(() => this.onValueChanged())
+    this.userForm.valueChanges.pipe(first()).subscribe(() => this.onValueChanged());
   }
 
   private createControls() {
-    this.name = this.userForm.controls.name;
+    this.firstName = this.userForm.controls.firstName;
+    this.lastName = this.userForm.controls.lastName;
     this.email = this.userForm.controls.email;
     this.password = this.userForm.controls.password;
   }
@@ -54,7 +58,7 @@ export class FormRegistrationComponent implements OnInit {
     const form: any = this.userForm;
 
     const keys = Object.keys(this.formErrors)
-    keys.forEach((field) => {
+    keys.forEach((field: string) => {
       this.formErrors[field] = '';
       const control = form.get(field);
 
@@ -62,15 +66,17 @@ export class FormRegistrationComponent implements OnInit {
         const message = this.validationMessages[field]
 
         const key = Object.keys(control.errors)
-        key.forEach((res) => {
-          this.formErrors[field] = message[res];
+        key.forEach((error: string) => {
+          this.formErrors[field] = message[error];
         })
       }
     })
   }
 
   onSubmit(form: FormGroup) {
-    console.log(form.valid)
-    console.log(form.invalid)
+    console.log(form.controls.firstName.value)
+    console.log(form.controls.lastName.value)
+    console.log(form.controls.email.value)
+    console.log(form.controls.password.value)
   }
 }

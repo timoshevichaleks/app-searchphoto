@@ -1,27 +1,41 @@
+<h2 class="form__title">Form Registration</h2>
+
 <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" class="example-container">
+
   <mat-form-field appearance="fill">
-    <mat-label>Enter your Name</mat-label>
-    <input matInput id="name" type="text" placeholder="Enter your name"
-           formControlName="name" (blur)="onValueChanged()" required>
-    <mat-error *ngIf="name.invalid && (name.touched || name.dirty)">{{formErrors.name}}</mat-error>
+    <mat-label>Enter your first name</mat-label>
+    <input matInput id="firstName" type="text" placeholder="Enter your first name"
+           formControlName="firstName" (blur)="onValueChanged()" required>
+    <mat-hint align="end" *ngIf="firstName.valid">{{formSuccess.firstName}}</mat-hint>
+    <mat-error *ngIf="firstName.invalid && (firstName.touched || firstName.dirty)">{{formErrors.firstName}}</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your last name</mat-label>
+    <input matInput id="lastName" type="text" placeholder="Enter your last name"
+           formControlName="lastName" (blur)="onValueChanged()" required>
+    <mat-hint align="end" *ngIf="lastName.valid">{{formSuccess.lastName}}</mat-hint>
+    <mat-error *ngIf="lastName.invalid && (lastName.touched || lastName.dirty)">{{formErrors.lastName}}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Enter your email</mat-label>
     <input matInput id="email" type="email" placeholder="pat@example.com"
            formControlName="email" (blur)="onValueChanged()" required>
+    <mat-hint align="end" *ngIf="email.valid">{{formSuccess.email}}</mat-hint>
     <mat-error *ngIf="email.invalid && (email.touched || email.dirty)">{{formErrors.email}}</mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
     <input matInput [type]="hide ? 'password' : 'text'"
-           formControlName="password" (blur)="onValueChanged()">
+           formControlName="password" (blur)="onValueChanged()" required>
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
-    <mat-error *ngIf="password.invalid">{{formErrors.password}}</mat-error>
+    <mat-hint align="end" *ngIf="password.valid">{{formSuccess.password}}</mat-hint>
+    <mat-error *ngIf="password.invalid  && (password.touched || password.dirty)">{{formErrors.password}}</mat-error>
   </mat-form-field>
 
   <button mat-raised-button color="primary" [disabled]="userForm.invalid">Registration</button>
