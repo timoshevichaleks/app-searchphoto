@@ -1,6 +1,6 @@
 <h2 class="form__title">Form Registration</h2>
 
-<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" class="example-container">
+<form [formGroup]="userForm" class="example-container">
 
   <mat-form-field appearance="fill">
     <mat-label>Enter your first name</mat-label>
@@ -56,5 +56,7 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" [disabled]="userForm.invalid">Registration</button>
+  <button mat-raised-button color="primary" (click)="onSubmit(userForm.value)" [disabled]="userForm.invalid">Registration
+  </button>
+  <a mat-raised-button color="accent" routerLink="authorisation">Authorisation</a>
 </form>

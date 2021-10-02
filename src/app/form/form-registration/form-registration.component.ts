@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormService } from "../form.service";
+import { User } from "../models/user";
+import firebase from "firebase/compat";
+import UserCredential = firebase.auth.UserCredential;
+
 
 @Component({
   selector: 'app-form-registration',
@@ -12,11 +17,11 @@ export class FormRegistrationComponent implements OnInit {
 
   userForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private formService: FormService) {
   }
 
   ngOnInit(): void {
-    this.buildForm()
+    this.buildForm();
   }
 
   private buildForm() {
@@ -33,11 +38,23 @@ export class FormRegistrationComponent implements OnInit {
     return this.userForm.get(controlName)?.hasError(errorName);
   }
 
-  onSubmit(form: FormGroup) {
-    console.log(form.controls.firstName.value)
-    console.log(form.controls.lastName.value)
-    console.log(form.controls.age.value)
-    console.log(form.controls.email.value)
-    console.log(form.controls.password.value)
+  onSubmit(form: User): void {
+    const email = form.email;
+    const password = form.password;
+    console.log(email, password);
+
+    this.formService.createUser(email, password)
+      .then((userCredential: UserCredential) => {
+        const user = userCredential.user;
+
+        console.log(user)
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log(errorCode)
+        console.log(errorMessage)
+      })
   }
 }

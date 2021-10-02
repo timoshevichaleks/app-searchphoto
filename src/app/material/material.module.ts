@@ -22,7 +22,8 @@ const materialComponents = [
   MatListModule,
   MatFormFieldModule,
   MatInputModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+  MatButtonModule
 ]
 
 @NgModule({
