@@ -1,0 +1,28 @@
+<form [formGroup]="userForm" class="example-container">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your email</mat-label>
+    <input matInput id="email" type="email" formControlName="email" placeholder="pat@example.com" required>
+    <mat-error *ngIf="hasError('email','required')">Email is required.</mat-error>
+    <mat-error *ngIf="hasError('email','pattern')">Incorrect email address format.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="hasError('password','required')">Password is required.</mat-error>
+    <mat-error *ngIf="hasError('password','minlength')">Password must contain at least 7 characters.
+    </mat-error>
+    <mat-error *ngIf="hasError('password','maxlength')">Password must contain no more than 25
+      characters.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="onSubmit(userForm.value)" [disabled]="userForm.invalid">Authorisation
+  </button>
+  <a mat-raised-button color="accent" routerLink="/registration">Registration</a>
+</form>
