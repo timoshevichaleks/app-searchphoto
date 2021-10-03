@@ -4,6 +4,7 @@ import { AuthService } from "../auth.service";
 import { User } from "../models/user";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 
 @Component({
@@ -18,12 +19,21 @@ export class RegistrationComponent implements OnInit {
   userForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              public authService: AuthService
+              public authService: AuthService,
+              private angularFireAuth: AngularFireAuth
               ) {
   }
 
   ngOnInit(): void {
     this.buildForm();
+
+    this.authService.onAuthStateChanged((user: any) => {
+      if (user) {
+        console.log(user.uid)
+      } else {
+        console.log('not authorised')
+      }
+    }).then()
   }
 
   private buildForm() {

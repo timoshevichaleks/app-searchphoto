@@ -22,6 +22,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
+
+    this.authService.onAuthStateChanged((user: any) => {
+      if (user) {
+        console.log(user.uid)
+      }
+    }).then()
   }
 
   hasError(controlName: string, errorName: string): boolean | undefined {
@@ -40,10 +46,8 @@ export class LoginComponent implements OnInit {
 
     this.authService.userAuthorisation(email, password)
       .then((userCredential: UserCredential) => {
-        const user = userCredential.user?.uid;
-        console.log(user);
-
-        // this.authService.onAuthStateChanged(() => {}).then()
+        this.authService.userID = userCredential.user?.uid;
+        // console.log(user)
       })
       .then(() => this.authService.isLoggedIn = true)
       .catch((error) => console.log(error))

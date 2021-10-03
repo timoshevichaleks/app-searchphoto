@@ -9,6 +9,7 @@ import UserCredential = firebase.auth.UserCredential;
 export class AuthService {
 
   isLoggedIn: boolean;
+  userID: string | undefined;
 
   constructor(private angularFireAuth: AngularFireAuth) {
   }
@@ -22,7 +23,7 @@ export class AuthService {
   }
 
   onAuthStateChanged(user: any): Promise<firebase.Unsubscribe> {
-    return this.angularFireAuth.onAuthStateChanged(user)
+    return this.angularFireAuth.onAuthStateChanged(user);
   }
 
   signOut() {
