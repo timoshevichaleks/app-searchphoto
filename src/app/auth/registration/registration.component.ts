@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { FormService } from "../form.service";
+import { AuthService } from "../auth.service";
 import { User } from "../models/user";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
@@ -8,16 +8,18 @@ import UserCredential = firebase.auth.UserCredential;
 
 @Component({
   selector: 'app-form-registration',
-  templateUrl: './form-registration.component.html',
-  styleUrls: ['./form-registration.component.scss']
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
 })
-export class FormRegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit {
 
   hide: boolean = true;
 
   userForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private formService: FormService) {
+  constructor(private formBuilder: FormBuilder,
+              public authService: AuthService
+              ) {
   }
 
   ngOnInit(): void {
@@ -38,23 +40,23 @@ export class FormRegistrationComponent implements OnInit {
     return this.userForm.get(controlName)?.hasError(errorName);
   }
 
-  onSubmit(form: User): void {
+  registration(form: User): void {
     const email = form.email;
     const password = form.password;
     console.log(email, password);
 
-    this.formService.createUser(email, password)
+    this.authService.createUser(email, password)
       .then((userCredential: UserCredential) => {
         const user = userCredential.user;
 
         console.log(user)
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      .then(() => this.authService.isLoggedIn = true)
+      .catch((error) => console.log(error.errorMessage))
+  }
 
-        console.log(errorCode)
-        console.log(errorMessage)
-      })
+  logout() {
+    this.authService.signOut()
+      .then(() => this.authService.isLoggedIn = false)
   }
 }

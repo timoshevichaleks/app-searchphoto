@@ -3,30 +3,27 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { ReactiveFormsModule } from "@angular/forms";
-import { FormRoutingModule } from './form-routing.module';
+import { AuthRoutingModule } from './auth-routing.module';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { FormComponent } from './form/form.component';
 import { RouterModule } from "@angular/router";
-import { FormAuthorisationComponent } from './form-authorisation/form-authorisation.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
-
-    FormComponent,
-     FormAuthorisationComponent
+    LoginComponent
   ],
   imports: [
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    FormRoutingModule,
+    AuthRoutingModule,
     MatButtonModule,
     MatIconModule,
     RouterModule
   ]
 })
-export class FormModule {
+export class AuthModule {
 }

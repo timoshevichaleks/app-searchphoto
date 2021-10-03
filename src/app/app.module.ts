@@ -6,8 +6,7 @@ import { AppComponent } from './app.component';
 import { ImagesModule } from "./images/images.module";
 import { HttpClientModule } from "@angular/common/http";
 import { MaterialModule } from "./material/material.module";
-import { FormRegistrationComponent } from './form/form-registration/form-registration.component';
-import { FormModule } from "./form/form.module";
+import { RegistrationComponent } from './auth/registration/registration.component';
 import { AngularFireModule } from "@angular/fire/compat";
 import { environment } from "../environments/environment";
 import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
@@ -17,7 +16,7 @@ import { AngularFireStorageModule } from "@angular/fire/compat/storage";
 @NgModule({
   declarations: [
     AppComponent,
-    FormRegistrationComponent
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +24,6 @@ import { AngularFireStorageModule } from "@angular/fire/compat/storage";
     ImagesModule,
     HttpClientModule,
     MaterialModule,
-    FormModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, 'app-searchphoto'),
     AngularFirestoreModule,
     AngularFireAuthModule,

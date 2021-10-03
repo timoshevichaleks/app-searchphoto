@@ -6,7 +6,9 @@ import UserCredential = firebase.auth.UserCredential;
 @Injectable({
   providedIn: 'root'
 })
-export class FormService {
+export class AuthService {
+
+  isLoggedIn: boolean;
 
   constructor(private angularFireAuth: AngularFireAuth) {
   }
@@ -17,5 +19,13 @@ export class FormService {
 
   userAuthorisation(email: string, password: string): Promise<UserCredential> {
     return this.angularFireAuth.signInWithEmailAndPassword(email, password)
+  }
+
+  onAuthStateChanged(user: any): Promise<firebase.Unsubscribe> {
+    return this.angularFireAuth.onAuthStateChanged(user)
+  }
+
+  signOut() {
+    return this.angularFireAuth.signOut();
   }
 }

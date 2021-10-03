@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "../models/user";
-import { FormService } from "../form.service";
+import { AuthService } from "../auth.service";
 import firebase from "firebase/compat";
 import UserCredential = firebase.auth.UserCredential;
 
 @Component({
   selector: 'app-form-authorisation',
-  templateUrl: './form-authorisation.component.html',
-  styleUrls: ['./form-authorisation.component.scss']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class FormAuthorisationComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   hide: boolean = true;
 
   userForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private formService: FormService) {
+  constructor(private formBuilder: FormBuilder,
+              public authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -34,24 +35,22 @@ export class FormAuthorisationComponent implements OnInit {
     })
   }
 
-  onSubmit(form: User) {
-    const email = form.email;
-    const password = form.password;
-    console.log(email, password);
+  login(form: User) {
+    const {email, password} = form;
 
-    this.formService.userAuthorisation(email, password)
+    this.authService.userAuthorisation(email, password)
       .then((userCredential: UserCredential) => {
-        const user = userCredential.user;
+        const user = userCredential.user?.uid;
+        console.log(user);
 
-        console.log(user)
+        // this.authService.onAuthStateChanged(() => {}).then()
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(errorCode)
-        console.log(errorMessage)
-      })
+      .then(() => this.authService.isLoggedIn = true)
+      .catch((error) => console.log(error))
   }
 
+  logout() {
+    this.authService.signOut()
+      .then(() => this.authService.isLoggedIn = false);
+  }
 }

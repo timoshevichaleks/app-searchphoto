@@ -1,6 +1,6 @@
 <h2 class="form__title">Form Registration</h2>
 
-<form [formGroup]="userForm" class="example-container">
+<form *ngIf="!authService.isLoggedIn" [formGroup]="userForm" class="example-container">
 
   <mat-form-field appearance="fill">
     <mat-label>Enter your first name</mat-label>
@@ -56,7 +56,11 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" (click)="onSubmit(userForm.value)" [disabled]="userForm.invalid">Registration
+  <button mat-raised-button color="primary" (click)="registration(userForm.value)"
+          [disabled]="userForm.invalid">Registration
   </button>
-  <a mat-raised-button color="accent" routerLink="authorisation">Authorisation</a>
+  <a mat-raised-button color="accent" routerLink="../login">Authorisation</a>
 </form>
+
+<button mat-raised-button color="warn" (click)="logout()">Logout</button>
+

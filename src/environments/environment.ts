@@ -2,8 +2,6 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 export const environment = {
   production: false,
@@ -23,10 +21,6 @@ export const environment = {
   // dataBase: 'https://searchimages-ac3c9-default-rtdb.europe-west1.firebasedatabase.app/photos'
   // secret: '40c50bde815bc6ac'
 };
-
-// Initialize Firebase
-const app = initializeApp(environment.firebaseConfig);
-const analytics = getAnalytics(app);
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
