@@ -8,7 +8,7 @@ import UserCredential = firebase.auth.UserCredential;
 })
 export class AuthService {
 
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
   userID: string | undefined;
 
   constructor(private angularFireAuth: AngularFireAuth) {

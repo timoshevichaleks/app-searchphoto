@@ -18,6 +18,7 @@ export class ImagesListComponent implements OnInit {
   page = new BehaviorSubject<number>(1);
   pageSize = new BehaviorSubject<number>(12)
   searchControl: FormControl = new FormControl();
+  userUid: string;
 
   constructor(private imagesService: ImagesService) {
   }
