@@ -9,17 +9,17 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatCardModule } from "@angular/material/card";
 import { NgxPaginationModule } from "ngx-pagination";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-
+import { ImageUrlPipe } from './image-url.pipe';
 
 @NgModule({
-	declarations: [
-		ImagesListComponent,
-  BookmarksComponent
-	],
-	exports: [
-		ImagesListComponent
-	],
+  declarations: [
+    ImagesListComponent,
+    BookmarksComponent,
+    ImageUrlPipe
+  ],
+  exports: [
+    ImagesListComponent
+  ],
   imports: [
     CommonModule,
     MatButtonModule,
@@ -32,4 +32,5 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     FormsModule
   ]
 })
-export class ImagesModule { }
+export class ImagesModule {
+}

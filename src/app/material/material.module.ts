@@ -7,6 +7,9 @@ import { MatButtonModule } from "@angular/material/button";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { ReactiveFormsModule } from "@angular/forms";
 
 const materialComponents = [
   CommonModule,
@@ -16,7 +19,11 @@ const materialComponents = [
   MatButtonModule,
   BrowserAnimationsModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatFormFieldModule,
+  MatInputModule,
+  ReactiveFormsModule,
+  MatButtonModule
 ]
 
 @NgModule({

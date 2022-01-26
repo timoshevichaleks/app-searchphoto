@@ -1,0 +1,66 @@
+<h2 class="form__title">Form Registration</h2>
+
+<form *ngIf="!authService.isLoggedIn" [formGroup]="userForm" class="example-container">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your first name</mat-label>
+    <input matInput id="firstName" type="text" formControlName="firstName" placeholder="Enter your first name" required>
+    <mat-error *ngIf="hasError('firstName', 'required')">First name is required.</mat-error>
+    <mat-error *ngIf="hasError('firstName', 'minlength')">First name must contain at least 4
+      characters.
+    </mat-error>
+    <mat-error *ngIf="hasError('firstName', 'maxlength')">First name must contain no more than 15
+      characters.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your last name</mat-label>
+    <input matInput id="lastName" type="text" formControlName="lastName" placeholder="Enter your last name" required>
+    <mat-error *ngIf="hasError('lastName','required')">Last name is required.</mat-error>
+    <mat-error *ngIf="hasError('lastName','minlength')">Last name must contain at least 4 characters.
+    </mat-error>
+    <mat-error *ngIf="hasError('lastName','maxlength')">Last name must contain no more than 15
+      characters.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your age</mat-label>
+    <input matInput id="age" type="number" formControlName="age" placeholder="Enter your age" required>
+    <mat-error *ngIf="hasError('age','required')">Age is required.</mat-error>
+    <mat-error *ngIf="hasError('age','min') || hasError('age', 'max')">
+      The value should be in the range of 18...122.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your email</mat-label>
+    <input matInput id="email" type="email" formControlName="email" placeholder="pat@example.com" required>
+    <mat-error *ngIf="hasError('email','required')">Email is required.</mat-error>
+    <mat-error *ngIf="hasError('email','pattern')">Incorrect email address format.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Enter your password</mat-label>
+    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="hasError('password','required')">Password is required.</mat-error>
+    <mat-error *ngIf="hasError('password','minlength')">Password must contain at least 7 characters.
+    </mat-error>
+    <mat-error *ngIf="hasError('password','maxlength')">Password must contain no more than 25
+      characters.
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="registration(userForm.value)"
+          [disabled]="userForm.invalid">Registration
+  </button>
+  <a mat-raised-button color="accent" routerLink="../login">Authorisation</a>
+</form>
+
+<button mat-raised-button color="warn" (click)="logout()">Logout</button>
+
